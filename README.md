@@ -2,7 +2,7 @@ c++-features
 ============
 
 This script prints the supported and announced features of the C++
-compiler and library.  Macros `__cpp` are defined appropriately.
+compiler and library.  Macros with the prefix `__cpp` are defined appropriately.
 The values can be used in `static_assert` statements to ensure
 the compilation environment has the necessary support.
 
