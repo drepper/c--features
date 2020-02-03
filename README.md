@@ -2,9 +2,16 @@ c++-features
 ============
 
 This script prints the supported and announced features of the C++
-compiler and library.  Macros with the prefix `__cpp` are defined appropriately.
-The values can be used in `static_assert` statements to ensure
+compiler and library, including experimental features.  It relies on the
+required functionality of C++ compilers to define macros with
+the prefix `__cpp` as appropriate.  The values of the macros indicate
+the date of the specification the features.  The value of the same macro
+can have multiple dates, indicating multiple revisions of the feature definition.
+Later definitions are backward-compatible with earlier versions which means
+the values can be used in `static_assert` statements to ensure
 the compilation environment has the necessary support.
+
+    __static_assert(__cpp_lambdas >= 200907);
 
 The script can be used with an optional argument indicating which
 standard should be used.
@@ -19,8 +26,8 @@ compiler.
 This invocation on the other hand shows the support for the (upcoming) C++20
 standard along with the GNU extensions, if any.
 
-It is possible to control the compiler that is used with the CXX environment
-variable.
+By default, `g++` is used as the compiler.  It is possible to select a different
+compiler using the CXX environment variable.
 
     CXX=clang++ c++-features.sh c++17
 
