@@ -5,7 +5,7 @@ This script prints the supported and announced features of the C++
 compiler and library, including experimental features.  It relies on the
 required functionality of C++ compilers to define macros with
 the prefix `__cpp` as appropriate.  The values of the macros indicate
-the date of the specification the features.  The value of the same macro
+the date of the specification of the features.  The value of the same macro
 can have multiple dates, indicating multiple revisions of the feature definition.
 Later definitions are backward-compatible with earlier versions which means
 the values can be used in `static_assert` statements to ensure
