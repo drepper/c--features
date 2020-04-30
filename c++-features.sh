@@ -13,6 +13,7 @@ array
 atomic
 bit
 bitset
+buffer
 cassert
 ccomplex
 cctype
@@ -27,8 +28,11 @@ climits
 clocale
 cmath
 codecvt
+compare
 complex
+concepts
 condition_variable
+coroutine
 csetjmp
 csignal
 cstdalign
@@ -47,6 +51,7 @@ cwctype
 deque
 exception
 execution
+executor
 fenv.h
 filesystem
 forward_list
@@ -54,6 +59,8 @@ fstream
 functional
 future
 initializer_list
+internet
+io_context
 iomanip
 ios
 iosfwd
@@ -67,11 +74,13 @@ map
 memory
 memory_resource
 mutex
+net
 netfwd
 new
 numeric
 optional
 ostream
+propagate_const
 queue
 random
 ratio
@@ -79,10 +88,13 @@ regex
 scoped_allocator
 set
 shared_mutex
+socket
+span
 source_location
 sstream
 stack
 stdexcept
+stop_token
 streambuf
 string
 string_view
