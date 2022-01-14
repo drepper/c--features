@@ -14,6 +14,7 @@ atomic
 barrier
 bit
 bitset
+buffer
 cassert
 ccomplex
 cctype
@@ -51,6 +52,7 @@ cwctype
 deque
 exception
 execution
+executor
 fenv.h
 filesystem
 forward_list
@@ -58,6 +60,8 @@ fstream
 functional
 future
 initializer_list
+internet
+io_context
 iomanip
 ios
 iosfwd
@@ -72,12 +76,14 @@ map
 memory
 memory_resource
 mutex
+net
 netfwd
 new
 numbers
 numeric
 optional
 ostream
+propagate_const
 queue
 random
 ranges
@@ -86,6 +92,8 @@ regex
 scoped_allocator
 set
 shared_mutex
+socket
+span
 source_location
 span
 sstream
