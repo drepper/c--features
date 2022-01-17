@@ -34,4 +34,19 @@ compiler using the CXX environment variable.
 This command shows the support for C++17 in the Clang compiler
 
 
+Compare Version
+---------------
+
+If the script is given two version numbers the output describes the difference in
+feature macros between the two version.
+
+
+Bash Completion
+---------------
+
+To make it easier to specify the version number a bash completion script is provided.
+To enable it add something like this to the shell profile scripts:
+
+     . ~/path/to/c++-features-completion.bash
+
 Author: Ulrich Drepper <drepper@gmail.com>

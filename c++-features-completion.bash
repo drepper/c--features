@@ -4,7 +4,7 @@ _cpp_features_completion()
   if [ ${#COMP_WORDS[@]} -gt 3 ]; then
     return
   fi
-  all=$(g++ --help -v|& sed -n 's/^  -std=\(\(c\|gnu\)++[^ ]*\).*/\1/p')
+  all=$(${CXX:-g++} --help -v|& sed -n 's/^  -std=\(\(c\|gnu\)++[^ ]*\).*/\1/p')
   if [ ${#COMP_WORDS[@]} -eq 1 ]; then
     COMPREPLY=($all)
   elif [[ " ${all[*]} " =~ " ${COMP_WORDS[1]} " ]]; then
