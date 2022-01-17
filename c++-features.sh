@@ -145,7 +145,8 @@ if [ -z "$ver2" ]; then
   less -RF
 else
   diff -u0 <(compile $ver | sort -n -k2) <(compile $ver2 | sort -n -k2) | tail -n+3 | sed '/^@/d' |
-  awk '{ if ($1 == "-#define") { k=$2; v=$3 } else { if(k == $2) { printf("%s %s %s\n", k, v, $3) } else { if (k!="") printf("%s %s N/A\n", k,v); printf("%s N/A %s\n", $2, $3) } k=""; v="" } } END { if (k != "") { printf("%s %s N/A\n", k, v) } }' |
+  awk '{ if ($1 == "-#define") { rem[$2]=$3 } else { if($2 in rem) { printf("%s %s %s\n", $2, rem[$2], $3); delete rem[$2] } else { printf("%s N/A %s\n", $2, $3) } } } END { for (k in rem) { printf("%s %s N/A\n", k, rem[k]) } }' |
+  sort -k1 |
   (printf ".TS\n|lb| lb| lb|\n|l| l| l|.\n_\nMacro\t$ver Value\t$ver2 Value\n_\n";
    while read m v1 v2; do
      printf "%s\t" "$m";
