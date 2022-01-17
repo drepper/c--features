@@ -2,8 +2,11 @@
 # Print supported and announced C++ features of compiler and library
 # Written by Ulrich Drepper <drepper@gmail.com>
 ver=""
-if [ $# -eq 1 ]; then
-  ver="-std=$1"
+if [ $# -ge 1 ]; then
+  ver="$1"
+fi
+if [ $# -eq 2 ]; then
+  ver2="$2"
 fi
 
 # All C++ standard headers
@@ -126,16 +129,31 @@ has_include() {
 
 compile() {
   (printf '#include <version>\n#ifdef __has_include\n'; for h in "${headers[@]}"; do has_include experimental "$h"; done; printf '#endif\n') |
-  ${CXX:-g++} $ver -dM -E -x c++ - |
+  ${CXX:-g++} -std=$1 -dM -E -x c++ - |
   egrep '^[[:space:]]*#[[:space:]]*define *__cpp'
 }
 
-paste <(compile | sort -n -k3) <(compile | sort -k2) |
-(printf '.TS\n|lb| lb| lb| lb|\n|l| l| l| l|.\n_\nMacro\tValue\tMacro\tValue\n_\n';
- while read d m v d2 m2 v2; do
-   printf "%s\t%s\t%s\t%s\n" "$m" "$v" "$m2" "$v2";
- done;
- printf "_\n.TE\n") |
-groff -mandoc -t -E -Tutf8 2>/dev/null |
-sed '/^[[:space:]]*$/d' |
-less -RF
+if [ -z "$ver2" ]; then
+  paste <(compile $ver | sort -n -k3) <(compile $ver | sort -k2) |
+  (printf '.TS\n|lb| lb| lb| lb|\n|l| l| l| l|.\n_\nMacro\tValue\tMacro\tValue\n_\n';
+   while read d m v d2 m2 v2; do
+     printf "%s\t%s\t%s\t%s\n" "$m" "$v" "$m2" "$v2";
+   done;
+   printf "_\n.TE\n") |
+  groff -mandoc -t -E -Tutf8 2>/dev/null |
+  sed '/^[[:space:]]*$/d' |
+  less -RF
+else
+  diff -u0 <(compile $ver | sort -n -k2) <(compile $ver2 | sort -n -k2) | tail -n+3 | sed '/^@/d' |
+  awk '{ if ($1 == "-#define") { k=$2; v=$3 } else { if(k == $2) { printf("%s %s %s\n", k, v, $3) } else { if (k!="") printf("%s %s N/A\n", k,v); printf("%s N/A %s\n", $2, $3) } k=""; v="" } } END { if (k != "") { printf("%s %s N/A\n", k, v) } }' |
+  (printf ".TS\n|lb| lb| lb|\n|l| l| l|.\n_\nMacro\t$ver Value\t$ver2 Value\n_\n";
+   while read m v1 v2; do
+     printf "%s\t" "$m";
+     if [ "$v1" == "N/A" ]; then printf "\t"; else printf "%s\t" "$v1"; fi;
+     if [ "$v2" == "N/A" ]; then printf "\n"; else printf "%s\n" "$v2"; fi;
+   done;
+   printf "_\n.TE\n") |
+  groff -mandoc -t -E -Tutf8 2>/dev/null |
+  sed '/^[[:space:]]*$/d' |
+  less -RF
+fi
