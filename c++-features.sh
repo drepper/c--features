@@ -1,8 +1,10 @@
 #! /bin/bash
 # Print supported and announced C++ features of compiler and library
 # Written by Ulrich Drepper <drepper@gmail.com>
-ver=""
-if [ $# -ge 1 ]; then
+if [ $# -eq 0 ]; then
+  ver=$(${CXX:-g++} -v --help 2>/dev/null |sed -n 's/^  -std=\(gnu[+][+][0-8][^ ]*\).*/\1/p'|sort|tail -n1)
+  printf 'using version %s\n' $ver
+else
   ver="$1"
 fi
 if [ $# -eq 2 ]; then
