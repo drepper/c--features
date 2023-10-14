@@ -134,7 +134,7 @@ has_include() {
 compile() {
   (printf '#include <version>\n#ifdef __has_include\n'; for h in "${headers[@]}"; do has_include experimental "$h"; done; printf '#endif\n') |
   ${CXX:-g++} -std=$1 -dM -E -x c++ - |
-  egrep '^[[:space:]]*#[[:space:]]*define *__cpp'
+  grep -E '^[[:space:]]*#[[:space:]]*define *__cpp'
 }
 
 if [ -z "$ver2" ]; then
