@@ -58,6 +58,7 @@ deque
 exception
 execution
 executor
+expected
 fenv.h
 filesystem
 format
@@ -89,6 +90,7 @@ numbers
 numeric
 optional
 ostream
+print
 propagate_const
 queue
 random
@@ -96,6 +98,7 @@ ranges
 ratio
 regex
 scoped_allocator
+semaphore
 set
 shared_mutex
 socket
@@ -113,6 +116,7 @@ string
 string_view
 syncstream
 system_error
+text_encoding
 thread
 tuple
 typeindex
