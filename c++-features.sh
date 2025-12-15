@@ -38,6 +38,7 @@ compare
 complex
 concepts
 condition_variable
+contract
 coroutine
 csetjmp
 csignal
@@ -71,6 +72,7 @@ functional
 future
 generator
 hazard_pointer
+hive
 initializer_list
 inplace_vector
 internet
@@ -118,6 +120,9 @@ spanstream
 sstream
 stack
 stacktrace
+stdatomic.h
+stdbit.h
+stdchkint.h
 stdexcept
 stdfloat
 stop_token
