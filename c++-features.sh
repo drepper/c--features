@@ -1,14 +1,20 @@
 #! /bin/bash
 # Print supported and announced C++ features of compiler and library
 # Written by Ulrich Drepper <drepper@gmail.com>
+while [ $# -gt 0 ] && [[ $1 =~ ^-f* ]]; do
+  flags="$flags $1"
+  shift
+done
 if [ $# -eq 0 ]; then
   ver=$(${CXX:-g++} -v --help 2>/dev/null |sed -n 's/^  -std=\(gnu[+][+][0-8][^ ]*\).*/\1/p'|sort|tail -n1)
   printf 'using version %s\n' $ver
 else
   ver="$1"
+  shift
 fi
-if [ $# -eq 2 ]; then
+if [ $# -ge 1 ]; then
   ver2="$2"
+  shift
 fi
 
 # All C++ standard headers
@@ -152,7 +158,7 @@ has_include() {
 
 compile() {
   (printf '#include <version>\n#ifdef __has_include\n'; for h in "${headers[@]}"; do has_include experimental "$h"; done; printf '#endif\n') |
-  ${CXX:-g++} -std=$1 -dM -E -x c++ - |
+  ${CXX:-g++} -std=$1 -dM -E -x c++ $flags - |
   grep -E '^[[:space:]]*#[[:space:]]*define *__cpp'
 }
 
